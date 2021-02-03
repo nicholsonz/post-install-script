@@ -5,10 +5,10 @@
 ##########################################################
 
 # Set FQDN hostname
-hostnamectl set-hostname znsrvr2
+hostnamectl set-hostname Server1
 
 # Add alias for root and update alias database 
-echo "root:      zach" >>/etc/aliases
+echo "root:      user" >>/etc/aliases
 newaliases
 
 # Set SELINUX into permissive mode
@@ -54,10 +54,10 @@ yum install -y phpmyadmin
 
 # Postfix and Dovecot
 yum install -y postfix dovecot
-mkdir /home/zach/mail
-chown zach.zach -R /home/zach/mail
-chmod 700 -R /home/zach/mail
-chmod 600 /var/mail/zach
+mkdir /home/user/mail
+chown user.user -R /home/user/mail
+chmod 700 -R /home/user/mail
+chmod 600 /var/user/zach
 
 # UPS battery backup software
 
@@ -116,10 +116,10 @@ else
 fi
 
 # restore config/dir files from backup or master server
-rsync -arv /mnt/backup/znsrvr/2020/etc/httpd/conf/ /etc/httpd/conf
-rsync -arv /mnt/backup/znsrvr/2020/etc/httpd/conf.d/ /etc/httpd/conf.d
-rsync -arv /mnt/backup/znsrvr/2020/etc/httpd/conf.modules.d/ /etc/httpd/conf.modules.d
-rsync -arv /mnt/backup/znsrvr/2020/var/www/ /var/www
+rsync -arv /mnt/backup/Server/2020/etc/httpd/conf/ /etc/httpd/conf
+rsync -arv /mnt/backup/Server/2020/etc/httpd/conf.d/ /etc/httpd/conf.d
+rsync -arv /mnt/backup/Server/2020/etc/httpd/conf.modules.d/ /etc/httpd/conf.modules.d
+rsync -arv /mnt/backup/Server/2020/var/www/ /var/www
 
 echo
 
@@ -152,17 +152,17 @@ echo "Begin Postfix/Dovecot configuration"
 echo
 
 # import config files for mail server
-rsync -arv /mnt/backup/znsrvr/2020/etc/dovecot/ /etc/dovecot
-rsync -arv /mnt/backup/znsrvr/2020/etc/postfix/ /etc/postfix
+rsync -arv /mnt/backup/Server/2020/etc/dovecot/ /etc/dovecot
+rsync -arv /mnt/backup/Server/2020/etc/postfix/ /etc/postfix
 
 echo
 
 
 echo "Perform file restoration"
 echo
-rsync -arv /mnt/backup/znsrvr/2020/etc/logwatch/ /etc/logwatch
-rsync -arv /mnt/backup/znsrvr/2020/etc/fail2ban/ /etc/fail2ban
-rsync -arv /mnt/backup/znsrvr/2020/etc/php.ini /etc/
+rsync -arv /mnt/backup/Server/2020/etc/logwatch/ /etc/logwatch
+rsync -arv /mnt/backup/Server/2020/etc/fail2ban/ /etc/fail2ban
+rsync -arv /mnt/backup/Server/2020/etc/php.ini /etc/
 
 # Webmin installation
 #{
