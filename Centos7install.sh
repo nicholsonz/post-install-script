@@ -57,7 +57,7 @@ yum install -y postfix dovecot
 mkdir /home/user/mail
 chown user.user -R /home/user/mail
 chmod 700 -R /home/user/mail
-chmod 600 /var/user/zach
+chmod 600 /var/mail/user
 
 # UPS battery backup software
 
