@@ -5,7 +5,7 @@
 ##########################################################
 
 # Set FQDN hostname
-hostnamectl set-hostname Server1
+hostnamectl set-hostname Server
 
 # Add alias for root and update alias database 
 echo "root:      user" >>/etc/aliases
@@ -196,8 +196,8 @@ systemctl enable cockpit.socket
 mkdir /etc/cron.custom
 
 # drop in custom cron jobs
-rsync -arv /mnt/backup/znsrvr/2020/etc/cron.custom/ /etc/cron.custom
-rsync -arv /mnt/backup/znsrvr/2020/var/spool/cron/root /var/spool/cron
+rsync -arv /mnt/backup/Server/2020/etc/cron.custom/ /etc/cron.custom
+rsync -arv /mnt/backup/Server/2020/var/spool/cron/root /var/spool/cron
 
 # RKHunter
 yum install -y rkhunter
