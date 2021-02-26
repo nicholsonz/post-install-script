@@ -197,7 +197,7 @@ mkdir /etc/cron.custom
 
 # drop in custom cron jobs
 rsync -arv /mnt/backup/Server/2020/etc/cron.custom/ /etc/cron.custom
-rsync -arv /mnt/backup/Server/2020/var/spool/cron/root /var/spool/cron
+
 
 # RKHunter
 yum install -y rkhunter
