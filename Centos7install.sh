@@ -138,8 +138,26 @@ _EOF_
 
 # Gunzip latest sql.gz file for each databse and cp to "database".sql 
 
-mysql --user=root -p roundcubemail < /mnt/backup/sql/roundcubemail/*.sql
-mysql --user=root -p suitecrm < /mnt/backup/sql/suitecrm/*.sql
+echo "Name of databases seperated by spaces to restore?"
+read -p 'databases: ' dbases
+
+for dbase in $dbases
+ do
+
+DIR="/mnt/backup/sql/${dbase}/"
+NEWEST=`ls -tr1d "${DIR}/"*.gz 2>/dev/null | tail -1`
+TODAY=$(date +"%a")
+
+  if [ ! -f "*.sql" ] ; then
+   gunzip ${NEWEST}
+   mysql --user=admin -p "$dbase" < $DIR/$TODAY.sql
+else
+    echo "The .sql file already exists for this $dbase"
+
+fi
+done
+
+echo "Securing SQL installation"
 
 mysql_secure_installation
 
