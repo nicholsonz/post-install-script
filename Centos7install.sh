@@ -136,7 +136,7 @@ CREATE DATABASE suitecrm DEFAULT CHARACTER SET utf8;
 CREATE DATABASE suitecrm2 DEFAULT CHARACTER SET utf8;
 _EOF_
 
-# Gunzip latest sql.gz file for each databse and cp to "database".sql 
+# Gunzip latest database backup sql.gz file for each databse and restore the database
 
 echo "Name of databases seperated by spaces to restore?"
 read -p 'databases: ' dbases
