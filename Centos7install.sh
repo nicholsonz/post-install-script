@@ -138,16 +138,15 @@ _EOF_
 
 # Gunzip latest database backup sql.gz file for each databse and restore the database
 
+DIR="/mnt/backup/sql/${dbase}/"
+NEWEST=`ls -tr1d "${DIR}/"*.gz 2>/dev/null | tail -1`
+TODAY=$(date +"%a")
+
 echo "Name of databases seperated by spaces to restore?"
 read -p 'databases: ' dbases
 
 for dbase in $dbases
  do
-
-DIR="/mnt/backup/sql/${dbase}/"
-NEWEST=`ls -tr1d "${DIR}/"*.gz 2>/dev/null | tail -1`
-TODAY=$(date +"%a")
-
   if [ ! -f "*.sql" ] ; then
    gunzip ${NEWEST}
    mysql --user=admin -p "$dbase" < $DIR/$TODAY.sql
