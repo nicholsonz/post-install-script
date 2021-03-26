@@ -138,22 +138,26 @@ _EOF_
 
 # Gunzip latest database backup sql.gz file for each databse and restore the database
 
-DIR="/mnt/backup/sql/${dbase}/"
-NEWEST=`ls -tr1d "${DIR}/"*.gz 2>/dev/null | tail -1`
-TODAY=$(date +"%a")
-
 echo "Name of databases seperated by spaces to restore?"
 read -p 'databases: ' dbases
 
+DIR="/mnt/backup/sql/${dbases}"
+TODAY=$(date +"%a")
+DB_FILE=${TODAY}.sql.gz
+
+
 for dbase in $dbases
  do
-  if [ ! -f "*.sql" ] ; then
-   gunzip ${NEWEST}
-   mysql --user=admin -p "$dbase" < $DIR/$TODAY.sql
-else
-    echo "The .sql file already exists for this $dbase"
-
-fi
+  if [ ! -f "${DIR}/${TODAY}.sql" ] ; then
+   gunzip -f "${DIR}/${DB_FILE}"
+   mysql --user=admin -p ${dbase} < $DIR/$TODAY.sql
+   echo "Backup complete for dbase ${dbase} ..."
+   echo "Returning file for dbase ${dbase} back to compressed state ..."
+   gzip ${DIR}/${TODAY}.sql
+  else
+    echo "- ${TODAY}.sql already exists for dbase ${dbase} and will be gzipped ..."
+    gzip ${DIR}/${TODAY}.sql
+  fi
 done
 
 echo "Securing SQL installation"
