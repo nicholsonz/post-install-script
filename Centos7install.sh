@@ -21,27 +21,7 @@ yum uqpdate -y
 # REMI Repository initialization
 yum install -y epel-release
 wget https://rpms.remirepo.net/enterprise/remi-release-7.rpm
-rpm -Uvh remi-release-7.rpmecho "Name of databases seperated by spaces to restore?"
-read -p 'databases: ' dbases
-
-DIR="/mnt/backup/sql/${dbases}"
-TODAY=$(date +"%a")
-DB_FILE=${TODAY}.sql.gz
-
-
-for dbase in $dbases
- do
-  if [ ! -f "${DIR}/${TODAY}.sql" ] ; then
-   gunzip -f "${DIR}/${DB_FILE}"
-   mysql --user=admin -p ${dbase} < $DIR/$TODAY.sql
-   echo "Backup complete for dbase ${dbase} ..."
-   echo "Returning file for dbase ${dbase} back to compressed state ..."
-   gzip ${DIR}/${TODAY}.sql
-  else
-    echo "- ${TODAY}.sql already exists for dbase ${dbase} and will be gzipped ..."
-    gzip ${DIR}/${TODAY}.sql
-  fi
-done
+rpm -Uvh remi-release-7.rpm
 yum update -y
 
 # Apache web server and security packages
